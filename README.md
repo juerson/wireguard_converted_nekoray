@@ -1,6 +1,7 @@
 # wireguard_converted_nekoray
 
-该项目库主要功能是：将 Cloudfare WARP 密钥生成的 WireGuard 配置文件转换为 NekoBox 的 nekoray 节点，支持生成生成单个 nekoray 节点、批量生成 nekoray 节点（p.s.批量生成 nekoray 节点，输入的数据，支持优选WARP IP地址程序的result.csv文件，也支持一行一个“ip:port“的ip.txt文件）
+该项目库主要功能是：将 Cloudfare WARP 密钥生成的 WireGuard 配置文件转换为 NekoBox 的 nekoray 节点，支持生成单个 nekoray 节点、批量生成 nekoray 节点。
+批量生成 nekoray 节点所导入的数据，支持优选WARP IP地址程序的result.csv文件，也支持一行一个“ip:port“的ip.txt文件。
 
 ## 1、使用截图
 
@@ -18,4 +19,5 @@
 - 4、我发现 wg-config.conf 中的 MTU 参数设置不同的值，可能会影响网速快或慢，以及节点是否能正常使用，故在程序中，也添加是否手动修改 nekoray 节点参数中 MTU 值的功能，如果没有输入任何东西就按回车键，就默认使用 wg-config.conf  文件中的 MTU 值。MTU值的设置可以参考：[wireguard_peer_mtu.csv](https://gist.github.com/nitred/f16850ca48c48c79bf422e90ee5b9d95) 里面的表格的数据尝试修改。
 
 ## 3、使用到的工具：
+
 NekoBox Windows版：https://github.com/MatsuriDayo/nekoray/releases
