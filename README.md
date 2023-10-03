@@ -11,9 +11,9 @@
 
 <img src="https://github.com/juerson/wireguard_converted_nekoray/assets/37030166/310aed07-a59f-4517-b340-b3d26b55a4a0" alt="导入NekoBox代理软件中" />
 
-![](images\ipv4_nodes.png)
+<img src="images\ipv4_nodes.png" />
 
-![](images\ipv6_nodes.png)
+<img src="images\ipv6_nodes.png" />
 
 注意：您家的宽带或光纤网络没有IPv6地址的，无法跑出IPv6的[result.csv](https://github.com/MiSaturo/CFWarp-Windows)文件，不管您从网上哪些弄来reult.csv文件(包括这个代码库)，没有IPv6的地址，是使用不了的，除非套一层IPv6的代理。本代码中的IPv6 UDP延迟测试，也是基础cf warp的ipv6地址测试出来的。
 
