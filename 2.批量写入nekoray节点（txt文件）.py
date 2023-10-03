@@ -1,6 +1,7 @@
 import base64
 import os
 import sys
+import re
 
 
 # 检查文件是否存在或大小为0，即文件无效
@@ -55,6 +56,26 @@ def update_base_info(MTU=None):
     return update_address
 
 
+# 判断是否为IP地址（IPv4或IPv6）
+def is_ip_address(ip_addr):
+    """ 匹配 IPv4 和 IPv6 地址 """
+    ipv4_pattern = r'^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+    ipv6_pattern = r'^(?:(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:))$'
+    try:
+        addr = ip_addr.rsplit(":", 1)[0]
+        ip = addr[1:-1] if addr.startswith('[') and addr.endswith(']') else addr
+        port = ip_addr.rsplit(':', 1)[1] if ip_addr.count(":") == 1 or (
+                ip_addr.count(":") > 3 and "]:" in ip_addr) else None
+        if re.match(ipv4_pattern, ip) and (port.isdigit() and int(port) >= 80):
+            ipv4 = re.match(ipv4_pattern, ip).group(0)
+            return True
+        elif re.match(ipv6_pattern, ip) and (port.isdigit() and int(port) >= 80):
+            ipv6 = re.match(ipv6_pattern, ip).group(0)
+            return True
+    except Exception as e:
+        pass
+
+
 if __name__ == '__main__':
     """判断文件是否存在或文件的大小为0"""
     files = ["配置文件/wg-config.conf", "ip.txt"]
@@ -76,9 +97,11 @@ if __name__ == '__main__':
     output_file = 'ouput_node.txt'  # nekoray节点保存到这里
     f = open(output_file, mode='w', encoding='utf-8')
     for endpoint in endpoints:
-        ip = endpoint.split(':')[0]
-        port = endpoint.split(':')[1]
-        node = base_str.replace('别名', f'{country}{ip}:{port}').replace('IP地址', ip).replace('端口', port)
+        ip = endpoint.rsplit(':', 1)[0]
+        ip = ip[1:-1] if ip.startswith('[') and ip.endswith(']') else ip  # 针对IPv6地址，写入JSON的server中要去掉中括号
+        port = endpoint.rsplit(':', 1)[1]
+        remarks = f"{ip}:{port}" if ip.count(":") == 0 else f"[{ip}]:{port}"  # 节点的别名、节点的名称（不重要，ipv6的加上中括号）
+        node = base_str.replace('别名', f'{country}{remarks}').replace('IP地址', ip).replace('端口', port)
         encoded = base64.b64encode(node.encode('utf-8'), altchars=b'-_')
         encoded_str = str(encoded, encoding='utf-8')
         transport_protocol = "nekoray://custom#"  # 在base64编码好的字符串前缀添加这个前缀（NekoBox软件专用的前缀）
