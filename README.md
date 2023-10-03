@@ -1,9 +1,9 @@
 # wireguard_converted_nekoray
 
-该项目库主要功能是：将 Cloudfare WARP 密钥生成的 WireGuard 配置文件转换为 NekoBox 的 nekoray 节点，支持生成单个 nekoray 节点、批量生成 nekoray 节点。
+该代码库主要功能是：将 Cloudfare WARP 密钥生成的 WireGuard 配置文件转换为 NekoBox 的 nekoray 节点，支持生成单个 nekoray 节点、批量生成 nekoray 节点。
 批量生成 nekoray 节点所导入的数据，支持优选WARP IP地址程序的result.csv文件，也支持一行一个“ip:port“的ip.txt文件。
 
-## 1、使用截图
+## 1、相关截图
 
 <img src="https://github.com/juerson/wireguard_converted_nekoray/assets/37030166/02d25cdf-d703-48a7-a3f2-a6a4cbdfb6b9" alt="生成单个节点" />
 
@@ -15,7 +15,7 @@
 
 <img src="images\ipv6_nodes.png" />
 
-注意：您家的宽带或光纤网络没有IPv6地址的，无法跑出IPv6的[result.csv](https://github.com/MiSaturo/CFWarp-Windows)文件，不管您从网上哪些弄来reult.csv文件(包括这个代码库)，没有IPv6的地址，是使用不了的，除非套一层IPv6的代理。本代码中的IPv6 UDP延迟测试，也是基础cf warp的ipv6地址测试出来的。
+注意：您电脑使用的宽带或光纤网络没有IPv6地址的，无法跑出IPv6的[result.csv](https://github.com/MiSaturo/CFWarp-Windows)文件，不管您从网上哪些弄来reult.csv文件(包括本代码库)，没有IPv6的地址，生成了链接，也使用不了的，除非套一层IPv6的代理。本代码中的IPv6 UDP延迟测试，也是套一层CF WARP的IPv6地址代理测试出来的。
 
 ## 2、文件解压后，需要注意的事项：
 
