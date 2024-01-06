@@ -19,7 +19,7 @@
 
 **【新增加】**支持其他服务商提供的 wireguard 配置文件，由于没有大量、不同服务商提供的 WireGuard 配置文件作为数据测试，不保证所有WireGuard 配置文件转为nekoray 链接都能使用，建议自己测试。目前我只知道用到如图所示的 PrivateKey、Address 、PublicKey 、Endpoint 四个参数的值就能使用：
 
-<img src="images\支持其他服务商提供的WireGuard配置文件.png" style="zoom: 67%;" />
+<img src="images\支持其他服务商提供的WireGuard配置文件.png" />
 
 ## 2、文件解压后，需要注意的事项：
 
