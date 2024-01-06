@@ -17,7 +17,7 @@
 
 注意：有线宽带或光纤、无线WiFi没有公网 IPv6 地址的，无法跑出IPv6的 [result.csv](https://github.com/MiSaturo/CFWarp-Windows) 文件，不管您从网上哪些弄来reult.csv文件(包括这个代码库)，没有IPv6的地址，是使用不了的，除非套一层IPv6的代理。本代码中的IPv6 UDP延迟测试，是基于 Cloudflare WARP 提供的 IPv6 地址测试出来的。
 
-**【新增加】**支持其他服务商提供的 wireguard 配置文件，由于没有大量、不同服务商提供的 WireGuard 配置文件作为数据测试，不保证所有WireGuard 配置文件转为nekoray 链接都能使用，建议自己测试。目前我只知道用到如图所示的 PrivateKey、Address 、PublicKey 、Endpoint 四个参数的值就能使用：
+【新增加】支持其他服务商提供的 wireguard 配置文件，由于没有大量、不同服务商提供的 WireGuard 配置文件作为数据测试，不保证所有WireGuard 配置文件转为nekoray 链接都能使用，建议自己测试。目前我只知道用到如图所示的 PrivateKey、Address 、PublicKey 、Endpoint 四个参数的值就能使用：
 
 <img src="images\支持其他服务商提供的WireGuard配置文件.png" />
 
