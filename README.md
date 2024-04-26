@@ -35,10 +35,10 @@
 
 <center>
 	<img src="images\支持其他服务商提供的WireGuard配置文件.png" />
+	<img src="images\wireguard.png" />
 </center>
-<img src="images\wireguard.png" />
 
 ### 三、使用到的工具：
 
-NekoBox Windows版：https://github.com/MatsuriDayo/nekoray/releases
-NekoBox Android版：https://github.com/MatsuriDayo/NekoBoxForAndroid
+- NekoBox Windows版：https://github.com/MatsuriDayo/nekoray/releases
+- NekoBox Android版：https://github.com/MatsuriDayo/NekoBoxForAndroid
