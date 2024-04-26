@@ -34,7 +34,7 @@
 支持其他服务商提供的 WireGuard 配置文件，由于没有大量、不同服务商提供的 WireGuard 配置文件作为数据测试，不保证所有WireGuard 配置文件都能转为`nekoray://` 或 `sn://` 链接使用，建议自己测试。目前我只知道，需要如图中 `PrivateKey`、`Address `、`PublicKey`、`Endpoint` 这四个参数值，就能转换/生成 `nekoray://` 或 `sn://` 的分享链接。
 
 <center>
-	<img src="images\支持其他服务商提供的WireGuard配置文件.png" />
+	<img src="images\支持其他服务商提供的WireGuard配置文件.png" /> <br>
 	<img src="images\wireguard.png" />
 </center>
 
