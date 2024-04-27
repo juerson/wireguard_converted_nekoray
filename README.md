@@ -2,13 +2,13 @@
 
 该代码库主要用途：使用 Cloudfare WARP 密钥生成的 WireGuard 配置文件的参数，转换为 NekoBox 客户端的 `nekoray://` 或 `sn://` 分享链接、转换为 Clash 配置文件。
 
-- 单个转换：按照程序傻瓜式操作，输入 WARP 的优选 IP ，生成对应的 `nekoray://` 或 `sn://` 分享链接（生成的链接，已经复制到剪切板）。
+1、单个转换：按照程序傻瓜式操作，输入 WARP 的优选 IP ，生成对应的 `nekoray://` 或 `sn://` 分享链接（生成的链接，已经复制到剪切板）。
 
-- 批量转换：支持 `ip.txt` 文件(每行一个 `IP:PORT` 格式的 WARP 优选 IP )、`result.csv` 文件的数据输入，批量转换。
+2、批量转换：支持 `ip.txt` 文件(每行一个 `IP:PORT` 格式的 WARP 优选 IP )、`result.csv` 文件的数据输入，批量转换。
 
-  （1）生成对应的 `nekoray://` 或 `sn://`分享链接，输出到 `output-node.txt` 文件中。
+- 生成对应的 `nekoray://` 或 `sn://`分享链接，输出到 `output-node.txt` 文件中。
 
-  （2）转换为 clash 配置文件，使用最简单的方法，字符串替换大法，将 `配置文件/clash.yaml`中的clash模板中，需要替换的字符替换掉，模板文件中的内容均来自 [subconverter v0.9.0](https://github.com/tindy2013/subconverter) 程序转换而来的，没有任何删改，除了添加 `dns` 相关的字段外。
+- 转换为 clash 配置文件，使用最简单的方法，字符串替换大法，将 `配置文件/clash.yaml`模板中，需要替换的字符替换掉，模板文件中的内容均来自 [subconverter v0.9.0](https://github.com/tindy2013/subconverter) 程序转换而来的，没有任何删改，除了添加 `dns` 相关的字段外。
 
 ### 一、使用注意
 
