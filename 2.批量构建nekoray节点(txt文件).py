@@ -78,7 +78,7 @@ if __name__ == '__main__':
     else:
         base_str = update_base_info(files[0])  # 调用函数
     endpoints = read_ip_endpoints(txt_file=files[1])
-    output_file = 'output_node.txt'  # nekoray节点保存到这里
+    output_file = 'output-node.txt'  # nekoray节点保存到这里
     f = open(output_file, mode='w', encoding='utf-8')
     for endpoint in endpoints:
         ip = endpoint.rsplit(':', 1)[0]

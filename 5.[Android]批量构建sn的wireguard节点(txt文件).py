@@ -172,7 +172,7 @@ if __name__ == '__main__':
 
     """ 将结果写入文件中 """
     if len(results) > 0:
-        output_file = 'output_node.txt'
+        output_file = 'output-node.txt'
         f = open(output_file, mode='w', encoding='utf-8')
         f.writelines("\n".join(results))
         f.close()
