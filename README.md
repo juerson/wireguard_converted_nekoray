@@ -1,9 +1,14 @@
 # wireguard_converted_nekoray
 
-该代码库主要用途：使用 Cloudfare WARP 密钥生成的 WireGuard 配置文件的参数，转换为 NekoBox 客户端的 `nekoray://` 或 `sn://` 分享链接。
+该代码库主要用途：使用 Cloudfare WARP 密钥生成的 WireGuard 配置文件的参数，转换为 NekoBox 客户端的 `nekoray://` 或 `sn://` 分享链接、转换为 Clash 配置文件。
 
 - 单个转换：按照程序傻瓜式操作，输入 WARP 的优选 IP ，生成对应的 `nekoray://` 或 `sn://` 分享链接（生成的链接，已经复制到剪切板）。
-- 批量转换：支持 `ip.txt` 文件(每行一个 `IP:PORT` 格式的 WARP 优选 IP )、`result.csv` 文件的数据输入，批量转换，生成对应的 `nekoray://` 或 `sn://`分享链接，输出到 `output_node.txt` 文件中。
+
+- 批量转换：支持 `ip.txt` 文件(每行一个 `IP:PORT` 格式的 WARP 优选 IP )、`result.csv` 文件的数据输入，批量转换。
+
+  （1）生成对应的 `nekoray://` 或 `sn://`分享链接，输出到 `output-node.txt` 文件中。
+
+  （2）转换为 clash 配置文件，使用最简单的方法，字符串替换大法，将 `配置文件/clash.yaml`中的clash模板中，需要替换的字符替换掉，模板文件中的内容均来自 [subconverter v0.9.0](https://github.com/tindy2013/subconverter) 程序转换而来的，没有任何删改，除了添加 `dns` 相关的字段外。
 
 ### 一、使用注意
 
@@ -17,6 +22,33 @@
 
 5、MTU 值修改，参考资料：[link](https://gist.github.com/nitred/f16850ca48c48c79bf422e90ee5b9d95/76c6ed28d476d8a7a2d84f7e36844989f3198864)。
 
+6、转换为 Clash 配置文件的，代码中没有使用到 `Reserved` 值。使用过程出现问题且有精力可以排查一下：账号问题(换成自己的 WARP Plus)、MTU值问题、`配置文件/clash.yaml` 文件中的 `dns` 字段值的问题、优选的 IP 问题、Clash 客户端问题（包括 Clash 内核问题），也可能是下面这块代码出问题，特别是dns解析与其它的dns冲突（网速慢的情况，可能跟它有关），可以将 `remote-dns-resolve` 和 `dns`字段删除。
+
+<details>
+<summary>点击展开代码</summary>
+<pre><code class="language-json">{
+  "name": "warp-001",
+  "type": "wireguard",
+  "server": "162.159.192.1",
+  "port": 2408,
+  "ip": "172.16.0.2",
+  "ipv6": "",
+  "private-key": "",
+  "public-key": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+  "pre-shared-key": "",
+  "reserved": "",
+  "udp": true,
+  "mtu": 1280,
+  "remote-dns-resolve": true,
+  "dns": [
+    "1.1.1.1",
+    "1.0.0.1",
+    "2606:4700:4700::1111",
+    "2606:4700:4700::1001"
+  ]
+}
+</code></pre>
+</details>
 ### 二、相关截图
 
 <img src="images\Screenshot.png" />
