@@ -96,7 +96,7 @@ if __name__ == '__main__':
     endpoints: list[str] = read_ip_endpoints(files[1])
 
     # 待插入clash中的wireguard配置模板
-    wireguard_str: str = """{"name":"warp-001","type":"wireguard","server":"162.159.192.1","port":2408,"ip":"172.16.0.2","ipv6":"","private-key":"","public-key":"bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=","pre-shared-key":"","reserved":"","udp":true,"mtu":1280,"remote-dns-resolve":true}"""
+    wireguard_str: str = """{"name":"warp-001","type":"wireguard","server":"162.159.192.1","port":2408,"ip":"172.16.0.2","ipv6":"","private-key":"","public-key":"bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=","pre-shared-key":"","reserved":"","udp":true,"mtu":1280}"""
     wireguard_dict: dict = json.loads(wireguard_str)
     wireguard_nodes: list = []
     wireguard_names: list = []
