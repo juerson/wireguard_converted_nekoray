@@ -38,8 +38,7 @@
   "pre-shared-key": "",
   "reserved": "",
   "udp": true,
-  "mtu": 1280,
-  "remote-dns-resolve": true,
+  "mtu": 1280
 }
 </code></pre>
 </details>
