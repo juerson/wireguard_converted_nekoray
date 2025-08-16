@@ -3,41 +3,74 @@ import base64
 import zlib
 import os
 import sys
+import re
+import ast  # 安全解析str成list
 
 
 # 检查文件是否存在或大小为0，即文件无效
-def check_file_exist_or_zero_size(file):
+def check_unusable_file(file: str) -> None:
     if not os.path.exists(file) or os.stat(file).st_size == 0:
         sys.exit()
 
 
 # 读取优选ip的ip.txt文件
-def read_ip_endpoints(txt_file):
+def read_txt_endpoints(txt_file: str) -> list[str]:
     endpoints = []
     with open(file=txt_file, mode='r', encoding='utf-8') as rf:
-        for item in rf.readlines():
-            if item.strip() != "":
-                endpoints.append(item.strip())
+        for line in rf.readlines():
+            trim_line = line.strip()
+            if trim_line != "":
+                endpoints.append(trim_line)
     return endpoints
 
 
 # 读取wg-config.conf配置文件的信息
-def read_wireguard_key_parameters(conf_file):
-    with open(file=conf_file, mode='r', encoding='utf-8') as f:
+def read_wg_conf_kv(conf_file: str) -> dict[str, any]:
+    with open(file=conf_file, mode='r', encoding='utf-8') as rf:
         wireguard_param = dict()
-        for line in f:
-            if line:
-                if line.startswith("PrivateKey"):
-                    wireguard_param["PrivateKey"] = line.strip().replace(' ', '').replace("PrivateKey=", '')
-                if line.startswith("PublicKey"):
-                    wireguard_param["PublicKey"] = line.strip().replace(' ', '').replace("PublicKey=", '')
-                if line.startswith("Address"):
-                    wireguard_param["Address"] = line.strip().replace(' ', '').replace("Address=", '').split(',')
-                if line.startswith("MTU"):
-                    wireguard_param["MTU"] = line.strip().replace(' ', '').replace("MTU=", '')
-                if line.startswith("Reserved"):
-                    wireguard_param["Reserved"] = line.strip().replace(' ', '').replace("Reserved=", '')
+        for line in rf:
+            trim_line = line.strip()
+            if trim_line:
+                if trim_line.startswith("PrivateKey"):
+                    wireguard_param["PrivateKey"] = trim_line.replace(' ', '').replace("PrivateKey=", '')
+                if trim_line.startswith("PublicKey"):
+                    wireguard_param["PublicKey"] = trim_line.replace(' ', '').replace("PublicKey=", '')
+                if trim_line.startswith("Address"):
+                    wireguard_param["Address"] = trim_line.replace(' ', '').replace("Address=", '').split(',')
+                if trim_line.startswith("MTU"):
+                    wireguard_param["MTU"] = trim_line.replace(' ', '').replace("MTU=", '')
+                if trim_line.startswith("Reserved"):
+                    wireguard_param["Reserved"] = trim_line.replace(' ', '').replace("Reserved=", '')
         return wireguard_param
+
+
+def is_valid_base64_4chars(s: str) -> bool:
+    """判断是否是合法的 4 字符 Base64 字符串"""
+    if not re.fullmatch(r"[A-Za-z0-9+/=]{4}", s):
+        return False
+    try:
+        base64.b64decode(s, validate=True)
+        return True
+    except Exception:
+        return False
+
+
+def base64_reserved(s: str) -> str:
+    s = s.strip()
+    # 如果原来就是合法的 4 字符 Base64
+    if is_valid_base64_4chars(s):
+        return s
+    # 如果是带中括号的数组格式
+    if s.startswith("[") and s.endswith("]"):
+        try:
+            lst = ast.literal_eval(s)
+            if isinstance(lst, list) and all(isinstance(i, int) for i in lst):
+                b64_str = base64.b64encode(bytes(lst)).decode("ascii")
+                return b64_str if is_valid_base64_4chars(b64_str) else ""
+        except ValueError:
+            return ""
+    # 其它情况
+    return ""
 
 
 def encode_sn_str(s: str) -> bytes:
@@ -89,7 +122,7 @@ class SnServer(SnBase):
 
 
 @dataclass(init=True, repr=True)
-class WireguardSerialize(SnBase):
+class SerializeWG(SnBase):
     version: int = 2
     server: SnServer = field(default_factory=SnServer)
     localAddress: str = "172.16.0.2/32"
@@ -122,7 +155,7 @@ class SnMeta(SnBase):
 
 @dataclass(init=True, repr=True)
 class Wireguard(SnBase):
-    WireguardSerialize: WireguardSerialize = field(default_factory=WireguardSerialize)
+    serialize_wg: SerializeWG = field(default_factory=SerializeWG)
     sn_meta: SnMeta = field(default_factory=SnMeta)
 
     def __str__(self) -> str:
@@ -132,39 +165,33 @@ class Wireguard(SnBase):
 
 if __name__ == '__main__':
     """ 读取外部文件的数据 """
-    files = ["配置文件/wg-config.conf", "ip.txt"]
-    for file in files:
-        check_file_exist_or_zero_size(file)  # 检查文件是否存在
-    param = read_wireguard_key_parameters(files[0])
-    private_key = param.get("PrivateKey")
-    private_key = private_key if private_key else "+HfkMSyh7obEkX4J8Qa7Xk77CLVn45AW4CdBbnFNaGc="  # 找不到就使用这个私钥
-    public_key = param.get("PublicKey")
-    public_key = public_key if public_key else "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo="  # 找不到就使用这个公钥
-    Reserved = param.get("Reserved")
-    Reserved = Reserved if Reserved else ""  # 找不到，就用空字符代替
-    mtu = param.get("MTU")
-    mtu = int(mtu) if mtu else 1280  # 找不到，就使用1280代替
-    Address = param.get("Address")
-    if Address is None or Address == "":
-        local_address = "172.16.0.2/32"
-    else:
-        local_address = ",".join(Address) if isinstance(Address, list) else "172.16.0.2/32"
+    files = ["配置文件/wg-config.conf", "ip.txt", "output-node.txt"]
+    for file in files[:-1]:
+        check_unusable_file(file)  # 检查文件是否存在
+    param = read_wg_conf_kv(files[0])
+    private_key = param.get("PrivateKey", "+HfkMSyh7obEkX4J8Qa7Xk77CLVn45AW4CdBbnFNaGc=")
+    public_key = param.get("PublicKey", "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=")
+    reserved = param.get("Reserved", "")
+    mtu = param.get("MTU", 1360)
+    address_value = param.get("Address", ["172.16.0.2/32"])
+    local_address = ",".join(address_value)
+    b64 = base64_reserved(str(reserved))
 
     """ 构建'sn://sg?'的链接 """
     results = []
-    endpoints = read_ip_endpoints(files[1])
+    endpoints = read_txt_endpoints(files[1])
     for ip_with_port in endpoints:
         try:
             ip = ip_with_port.rsplit(":", 1)[0].strip("[").strip("]")
             port = ip_with_port.rsplit(":", 1)[1]
-            serialize_obj = WireguardSerialize(server=SnServer(ip, int(port)),
-                                               localAddress=local_address,
-                                               privateKey=private_key,
-                                               peerPublicKey=public_key,
-                                               mtu=int(mtu), reserved=Reserved)
+            serialize_obj = SerializeWG(server=SnServer(ip, int(port)),
+                                        localAddress=local_address,
+                                        privateKey=private_key,
+                                        peerPublicKey=public_key,
+                                        mtu=int(mtu), reserved=b64)
             # 配置名称，不能取中文名称，也不能取一些特殊字符，具体支持哪些字符，自己测试
             config_name = f"warp-{ip_with_port}"
-            sn_wireguard = Wireguard(WireguardSerialize=serialize_obj, sn_meta=SnMeta(name=config_name))
+            sn_wireguard = Wireguard(serialize_wg=serialize_obj, sn_meta=SnMeta(name=config_name))
             results.append(str(sn_wireguard))
             print(sn_wireguard)
         except Exception as e:
@@ -172,9 +199,8 @@ if __name__ == '__main__':
 
     """ 将结果写入文件中 """
     if len(results) > 0:
-        output_file = 'output-node.txt'
-        f = open(output_file, mode='w', encoding='utf-8')
+        f = open(files[2], mode='w', encoding='utf-8')
         f.writelines("\n".join(results))
         f.close()
-        print(f"已经将节点写入{output_file}文件中！\n")
+        print(f"已经将节点写入{files[2]}文件中！\n")
         os.system("pause")
