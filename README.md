@@ -1,3 +1,5 @@
+这是beta版本：测试不通过，可能是warp又不行了。
+
 # wireguard_converted_nekoray
 
 该代码库主要用途：使用 Cloudfare WARP 密钥生成的 WireGuard 配置文件的参数，转换为 NekoBox 客户端的 `nekoray://` 或 `sn://` 分享链接、转换为 Clash 配置文件。
