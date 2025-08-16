@@ -1,4 +1,4 @@
-这是beta版本：测试不通过，可能是warp又不行了。
+这是beta版本：测试不通过，可能是warp又不行了，不能保证没有问题。这里，后面的内容跟main主分支内容一样，懒得写了。主要增加 nekoray v4.1.4 版本到 throne 更名版本的 `wg://`分享链接支持。
 
 # wireguard_converted_nekoray
 
