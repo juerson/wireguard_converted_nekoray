@@ -1,3 +1,6 @@
+# nekoray v4.0.1 https://github.com/MatsuriDayo/nekoray
+# 其他作者的最新版本/历史迭代版本不一定支持
+
 import pyperclip  # 将指定的运行结果自动复制到剪切板
 import base64
 import os
