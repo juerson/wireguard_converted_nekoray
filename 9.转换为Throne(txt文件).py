@@ -75,7 +75,7 @@ def list_reserved(s: str) -> list[int]:
 
 
 if __name__ == '__main__':
-    files = ["配置文件/wg-config.conf", "ip.txt", "output-node.txt"]
+    files = ["配置文件/wg-config.conf", "ip.txt", "output-links.txt"]
     # 检查两个输入文件是否可用
     for file in files[:-1]:
         check_unusable_file(file)

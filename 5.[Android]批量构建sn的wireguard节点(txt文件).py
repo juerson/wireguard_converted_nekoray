@@ -124,7 +124,7 @@ class SnMeta(SnBase):
 
 @dataclass(init=True, repr=True)
 class Wireguard(SnBase):
-    WireguardSerialize = field(default_factory=WireguardSerialize)
+    WireguardSerialize: WireguardSerialize = field(default_factory=WireguardSerialize)
     sn_meta: SnMeta = field(default_factory=SnMeta)
 
     def __str__(self) -> str:
@@ -174,7 +174,7 @@ if __name__ == '__main__':
 
     """ 将结果写入文件中 """
     if len(results) > 0:
-        output_file = 'output-node.txt'
+        output_file = 'output-links.txt'
         f = open(output_file, mode='w', encoding='utf-8')
         f.writelines("\n".join(results))
         f.close()

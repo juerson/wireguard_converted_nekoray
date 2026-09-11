@@ -78,7 +78,7 @@ def list_reserved(s: str) -> list[int]:
 
 
 if __name__ == '__main__':
-    files = ["配置文件/wg-config.conf", "result.csv", "output-node.txt"]
+    files = ["配置文件/wg-config.conf", "result.csv", "output-links.txt"]
     # 检查两个输入文件是否可用
     for file in files[:-1]:
         check_unusable_file(file)
@@ -106,6 +106,7 @@ if __name__ == '__main__':
         ip = endpoint.rsplit(':', 1)[0]  # ipv6的带中括号
         port = endpoint.rsplit(':', 1)[1]
         remarks = f"warp-{i + 1:0{width}d}"
+        # 直接黏贴会变成AmneziaWG节点，必须再从程序中复制黏贴一次，才变成wireguard节点，才能使用(否则会崩溃)
         NyameBox_link = f'wg://{ip}:{port}?private_key={quote(prik)}&peer_public_key={quote(pubk)}&reserved={quote(rsvd)}&persistent_keepalive=0&mtu={quote(mtu)}&use_system_interface=false&local_address={"-".join(addr)}#{quote(remarks)}'
         f.write(f"{NyameBox_link}\n")
         f.flush()

@@ -126,7 +126,7 @@ if __name__ == '__main__':
         # proxy_name_prefix = "      - "
         proxy_name_prefix: str = base64.b64decode("ICAgICAgLSA=").decode("utf-8")
         wireguard_names.append(f"{proxy_name_prefix}{proxy_name}")
-    output_file = "output-clash.yaml"
+    output_file = "output-wireguard.yaml"
     # 替换clash配置模板中指定的字符串
     with open('配置文件/clash.yaml', mode='r', encoding='utf-8') as rf, open(output_file, 'w', encoding='utf-8') as wf:
         clash = rf.read()
