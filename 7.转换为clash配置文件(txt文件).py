@@ -99,8 +99,8 @@ if __name__ == '__main__':
     wireguard_names: list = []
     # 使用OrderedDict对endpoints进行去重，并保持顺序，防止生成相同的节点
     deduplicated_list = OrderedDict.fromkeys(endpoints)
-    # 只处理前面300个，防止上千、上万的数据写入一个clash配置文件中，clash能处理？不会导致软件崩溃？
-    data_list = list(deduplicated_list)[:300]
+    # 只处理前面100个，防止上千、上万的数据写入一个clash配置文件中，clash能处理？不会导致软件崩溃？
+    data_list = list(deduplicated_list)[:100]
     for i, ip_with_port in enumerate(data_list):
         [server, port] = ip_with_port.rsplit(":", 1)
         index = str(i + 1).zfill(len(str(len(deduplicated_list))))
