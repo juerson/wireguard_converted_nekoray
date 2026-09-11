@@ -129,7 +129,7 @@ class SnMeta(SnBase):
 
 @dataclass(init=True, repr=True)
 class Wireguard(SnBase):
-    WireguardSerialize = field(default_factory=WireguardSerialize)
+    WireguardSerialize: WireguardSerialize = field(default_factory=WireguardSerialize)
     sn_meta: SnMeta = field(default_factory=SnMeta)
 
     def __str__(self) -> str:
