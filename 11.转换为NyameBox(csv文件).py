@@ -1,4 +1,4 @@
-# https://github.com/qr243vbi/nekobox
+# NyameBox/NekoBox 5.11.28.3 https://github.com/qr243vbi/nekobox
 
 from urllib.parse import quote
 import ast

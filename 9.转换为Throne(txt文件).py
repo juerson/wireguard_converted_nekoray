@@ -1,4 +1,4 @@
-# Throne v1.2.4
+# Throne v1.2.4 https://github.com/throneproj/Throne
 
 from urllib.parse import quote
 import base64
