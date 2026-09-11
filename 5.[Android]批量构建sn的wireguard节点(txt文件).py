@@ -1,3 +1,5 @@
+# Android nekoray v1.4.2 https://github.com/MatsuriDayo/NekoBoxForAndroid
+
 from dataclasses import field, dataclass
 import base64
 import zlib
@@ -122,7 +124,7 @@ class SnMeta(SnBase):
 
 @dataclass(init=True, repr=True)
 class Wireguard(SnBase):
-    WireguardSerialize: WireguardSerialize = field(default_factory=WireguardSerialize)
+    WireguardSerialize = field(default_factory=WireguardSerialize)
     sn_meta: SnMeta = field(default_factory=SnMeta)
 
     def __str__(self) -> str:

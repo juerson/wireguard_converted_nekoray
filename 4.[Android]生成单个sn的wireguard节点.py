@@ -1,3 +1,5 @@
+# Android nekoray v1.4.2 https://github.com/MatsuriDayo/NekoBoxForAndroid
+
 from dataclasses import field, dataclass
 import pyperclip  # 将指定的运行结果自动复制到剪切板
 import base64
@@ -127,7 +129,7 @@ class SnMeta(SnBase):
 
 @dataclass(init=True, repr=True)
 class Wireguard(SnBase):
-    WireguardSerialize: WireguardSerialize = field(default_factory=WireguardSerialize)
+    WireguardSerialize = field(default_factory=WireguardSerialize)
     sn_meta: SnMeta = field(default_factory=SnMeta)
 
     def __str__(self) -> str:
