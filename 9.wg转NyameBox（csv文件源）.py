@@ -15,6 +15,7 @@ def check_unusable_file(file: str) -> None:
 
 def read_csv_endpoints(csv_file: str) -> list[str]:
     endpoints = []
+    seen = set()
     with open(file=csv_file, mode='r', encoding='utf-8') as rf:
         next(rf)
         for line in rf:
@@ -22,7 +23,9 @@ def read_csv_endpoints(csv_file: str) -> list[str]:
             delay = trim_line.split(',')[-1].replace(' ', '').replace('ms', '')
             if int(delay) < 500:
                 endpoint = trim_line.split(',')[0]
-                endpoints.append(endpoint)
+                if endpoint not in seen:
+                    seen.add(endpoint)
+                    endpoints.append(endpoint)
         return endpoints
 
 

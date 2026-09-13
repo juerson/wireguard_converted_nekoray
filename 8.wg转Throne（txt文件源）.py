@@ -15,11 +15,14 @@ def check_unusable_file(file: str) -> None:
 
 def read_txt_endpoints(txt_file: str) -> list[str]:
     endpoints = []
+    seen = set()
     with open(file=txt_file, mode='r', encoding='utf-8') as rf:
         for line in rf.readlines():
             trim_line = line.strip()
             if trim_line != "":
-                endpoints.append(trim_line)
+                if trim_line not in seen:
+                    seen.add(trim_line)
+                    endpoints.append(trim_line)
         return endpoints
 
 

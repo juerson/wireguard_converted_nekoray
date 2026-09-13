@@ -15,10 +15,14 @@ def check_file_exist_or_zero_size(file):
 # 读取优选ip的ip.txt文件
 def read_ip_endpoints(txt_file):
     endpoints = []
+    seen = set()
     with open(file=txt_file, mode='r', encoding='utf-8') as rf:
         for item in rf.readlines():
             if item.strip() != "":
-                endpoints.append(item.strip())
+                endpoint = item.strip()
+                if endpoint not in seen:
+                    seen.add(endpoint)
+                    endpoints.append(endpoint)
         return endpoints
 
 

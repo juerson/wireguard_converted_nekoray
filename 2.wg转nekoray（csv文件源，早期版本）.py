@@ -15,13 +15,16 @@ def check_file_exist_or_zero_size(file):
 # 读取优选ip的result.csv文件
 def read_ip_endpoints(csv_file):
     endpoints = []
+    seen = set()
     with open(file=csv_file, mode='r', encoding='utf-8') as rf:
         next(rf)
         for line in rf:
             delay = line.strip().split(',')[-1].replace(' ', '').replace('ms', '')
             if int(delay) < 500:
                 endpoint = line.strip().split(',')[0]
-                endpoints.append(endpoint)
+                if endpoint not in seen:
+                    seen.add(endpoint)
+                    endpoints.append(endpoint)
         return endpoints
 
 

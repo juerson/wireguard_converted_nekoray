@@ -34,13 +34,17 @@ def read_wireguard_key_parameters(conf_file):
 # 读取优选ip的result.csv文件
 def read_ip_endpoints(csv_file):
     endpoints = []
+    seen = set()
     with open(file=csv_file, mode='r', encoding='utf-8') as rf:
         next(rf)
         for line in rf:
-            delay = line.strip().split(',')[-1].replace(' ', '').replace('ms', '')
+            trim_line = line.strip()
+            delay = trim_line.split(',')[-1].replace(' ', '').replace('ms', '')
             if int(delay) < 500:
-                endpoint = line.strip().split(',')[0]
-                endpoints.append(endpoint)
+                endpoint = trim_line.split(',')[0]
+                if endpoint not in seen:
+                    seen.add(endpoint)
+                    endpoints.append(endpoint)
         return endpoints
 
 
