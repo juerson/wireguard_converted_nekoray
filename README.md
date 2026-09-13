@@ -34,6 +34,9 @@ cfwarp转换工具集，将 Cloudflare WARP 官方的 WireGuard 和 Masque 协�
 
 2、目前只发现mihomo内核支持masque，也有人生成`masque://`的链接，还未发现提供哪个app软件使用，找到支持masque的app，手动将参数填上去，测试无延迟，不能使用的，没有深度测试。
 
+3、目前不支持转换为纯json配置的xray和sing-box。
+
+4、需要使用其他工具优选IP地址，替换文件 `ip.txt` 和 `result.csv` 的数据使用。
 
 ### 二、使用
 
