@@ -1,4 +1,4 @@
-# cfwarp-subconverter
+# cfwarp-converter
 
 cfwarp转换工具集，将 Cloudflare WARP 官方的 WireGuard 和 Masque 协议接口转换到第三方代理软件中使用。
 
@@ -78,17 +78,17 @@ python 0.注册wg和masque账号.py
 
 ### 三、截图
 
-<img src="images\[wiregruad]throme-pc.png" />
+![](images/[wiregruad]throme-pc.png)
 
-<img src="images\[wireguard]nekoray-pc-v4.0.1.png" />
+![](images/[wireguard]nekoray-pc-v4.0.1.png)
 
-<img src="images\[wireguard]NyameBox(lblis).png" />
+![](images/[wireguard]NyameBox(lblis).png)
 
-<img src="images\[wireguard]nekobox-android_sn链接.png" />
+![](images/[wireguard]nekobox-android_sn链接.png)
 
-<img src="images\[wireguard]clash-party（mihomo核心）.png" />
+![](images/[wireguard]clash-party（mihomo核心）.png)
 
-<img src="images\[masque]clash-party（mihomo核心）.png" />
+![](images/[masque]clash-party（mihomo核心）.png)
 
 ### 四、忠告
 
